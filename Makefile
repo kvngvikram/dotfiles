@@ -16,3 +16,8 @@ install:
 	apt install git
 	apt install neovim
 	apt install byobu
+	apt install zathura
+	apt install fonts-powerline
+
+browser:
+	apt install browser-plugin-freshplayer-pepperflash

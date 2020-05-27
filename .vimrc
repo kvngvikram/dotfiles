@@ -163,10 +163,11 @@ nnoremap <Leader>t :NERDTreeTabsToggle<CR>
 
 """"""""""""""""""""""""""""" vim-tmux-navigator
 let g:tmux_navigator_no_mappings = 1
-nnoremap <C-h> :TmuxNavigateLeft<cr>
-nnoremap <C-j> :TmuxNavigateDown<cr>
-nnoremap <C-k> :TmuxNavigateUp<cr>
-nnoremap <C-l> :TmuxNavigateRight<cr>
+nnoremap <M-h> :TmuxNavigateLeft<cr>
+nnoremap <M-j> :TmuxNavigateDown<cr>
+nnoremap <M-k> :TmuxNavigateUp<cr>
+nnoremap <M-l> :TmuxNavigateRight<cr>
+
 
 """"""""""""""""""""""""""""" SyntaxRange
 " For python in .sh scripts
@@ -233,12 +234,23 @@ set hlsearch
 " change the current working directory whenever you open a file, switch,delete buffer or open/close a window
 set autochdir
 
+" completion in command mode for vim (defalut enabled in neovim)
+set wildmenu
+
 " Remember foldings
 autocmd BufLeave,BufWinLeave * silent! mkview
 autocmd BufReadPost * silent! loadview
 " Give first line of fold as fold name
 "set foldtext=getline(v:foldstart)
 set foldtext=foldtext()
+
+" use default system clipboard for copy-pasting
+" this will enable copy paste to and from vim using d, y and p
+set clipboard=unnamedplus
+
+" set mouse support on
+" features: visual select, cursor position, scrolling
+set mouse=a
 
 " color column
 set colorcolumn=80
@@ -317,10 +329,10 @@ nnoremap <Leader>sn :if exists("g:syntax_on") <Bar>
 set backspace=indent,eol,start         " from: https://vi.stackexchange.com/a/2163
 
 " change split sizes
-"nnoremap <C-u> <C-w>+
-"nnoremap <C-i> <C-w>-
-"nnoremap <C-y> <C-w><
-"nnoremap <C-o> <C-w>>
+nnoremap <C-h> <C-w><
+nnoremap <C-j> <C-w>+
+nnoremap <C-k> <C-w>-
+nnoremap <C-l> <C-w>>
 
 
 
