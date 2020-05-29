@@ -103,6 +103,9 @@ Plug 'rhysd/vim-grammarous'
 " VS Code like color scheme
 Plug 'tomasiser/vim-code-dark'
 
+Plug 'ryanoasis/vim-devicons'
+" requires fonts https://github.com/ryanoasis/nerd-fonts
+
 call plug#end()
 " To install new plugins enter this command once vim in opened 
 " :PlugInstal
@@ -148,10 +151,13 @@ inoremap <silent><expr> <TAB>
 """"""""""""""""""""""""""""" cellmode
 let g:cellmode_default_mappings='0'
 
+""""""""""""""""""""""""""""" vim-devicons
+set encoding=UTF-8
+
 """"""""""""""""""""""""""""" slime
 let g:slime_no_mappings = 1
 let g:slime_target = "tmux"
-let g:slime_paste_file = "$HOME/.tmp_vim-slime_paste"
+let g:slime_paste_file = "/tmp/.tmp_vim-slime_paste"
 let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"} " check github page for this
 let g:slime_dont_ask_default = 1
 

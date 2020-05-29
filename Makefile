@@ -12,12 +12,23 @@ force:
 	ln -sf $(CURDIR)/init.vim ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/zathurarc ~/.config/zathura/zathurarc
 
-install:
-	apt install git
-	apt install neovim
-	apt install byobu
-	apt install zathura
-	apt install fonts-powerline
+terminal_install:
+	apt install -y git
+	apt install -y neovim
+	apt install -y byobu
+	apt install -y fonts-powerline
+	apt install -y ranger
+
+gui_install:
+	apt install -y zathura
+	apt install -y redshift-gtk
+	apt install -y safeeyes
+	apt install -y indicator-multiload
 
 browser:
-	apt install browser-plugin-freshplayer-pepperflash
+	apt install -y browser-plugin-freshplayer-pepperflash
+
+latex:
+	apt install -y texlive-latex-extra
+	apt install -y biber
+	apt install -y latexmk
