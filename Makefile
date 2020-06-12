@@ -1,11 +1,13 @@
 # $(CURDIR) will give the path to directory in which Makefile is present
 link:
+	ln -s $(CURDIR)/.bashrc ~/.bashrc
 	ln -s $(CURDIR)/.vimrc ~/.vimrc
 	ln -s $(CURDIR)/.tmux.conf ~/.byobu/.tmux.conf
 	ln -s $(CURDIR)/.latexmkrc ~/.latexmkrc
 	ln -s $(CURDIR)/init.vim ~/.config/nvim/init.vim
 	ln -s $(CURDIR)/zathurarc ~/.config/zathura/zathurarc
 force:
+	ln -sf $(CURDIR)/.bashrc ~/.bashrc
 	ln -sf $(CURDIR)/.vimrc ~/.vimrc
 	ln -sf $(CURDIR)/.tmux.conf ~/.byobu/.tmux.conf
 	ln -sf $(CURDIR)/.latexmkrc ~/.latexmkrc
@@ -32,3 +34,13 @@ latex:
 	apt install -y texlive-latex-extra
 	apt install -y biber
 	apt install -y latexmk
+
+hotspot:
+	apt install -y hostapd
+	git clone "https://github.com/oblique/create_ap.git" --depth=1
+	make install -C create_ap
+	rm -rf create_ap
+	
+# for openacc with gfortran
+# apt install nvidia-cuda-toolkit
+# apt install gcc-offload-nvptx

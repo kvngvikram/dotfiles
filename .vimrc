@@ -124,7 +124,7 @@ let mapleader = "\<Space>"
 
 """"""""""""""""""""""""""""" vim-lsp, asynccomplete
 "" For colors check the colors-section
-let g:lsp_semantic_enabled = 0
+let g:lsp_semantic_enabled = 1
 let g:lsp_preview_float = 1  " details of aurguments in a floating popup
 let g:lsp_diagnostics_enabled = 1   " Checking the code for errors
 let g:lsp_diagnostics_echo_cursor = 1  " Display error below at :command line
@@ -157,7 +157,7 @@ set encoding=UTF-8
 """"""""""""""""""""""""""""" slime
 let g:slime_no_mappings = 1
 let g:slime_target = "tmux"
-let g:slime_paste_file = "/tmp/.tmp_vim-slime_paste"
+let g:slime_paste_file = "/tmp/tmp_vim-slime_paste"
 let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"} " check github page for this
 let g:slime_dont_ask_default = 1
 
@@ -193,8 +193,8 @@ let g:indentLine_enabled = 1
 "let g:indentLine_conceallevel = 1
 
 """"""""""""""""""""""""""""" vimtex
+let g:vimtex_quickfix_enabled = 0  " for error message default mapping is \le
 " let g:vimtex_quickfix_autoclose_after_keystrokes = 1
-let g:vimtex_quickfix_enabled = 0
 let g:tex_flavor="latex"
 
 "" dictionary path
@@ -442,6 +442,22 @@ endfunction
 
 "autocmd BufReadPost,BufNewFile *.sh, call Vimux_commands()
 autocmd BufReadPost,BufNewFile *.sh, call Slime_Tmux_commands()
+
+
+""""""""""""""""""""""""""""SlimeTmuxFortran""""""""""""""""""""""""""""
+function! Slime_Tmux_Fortran_commands()
+	" check github page for this
+	let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
+	nnoremap <Leader>^ :!tmux split-window -d -h -p 40<CR><CR>
+				\:execute 'SlimeSend1 cd ' getcwd()<CR>
+				\:SlimeSend1 clear<CR>
+	" Instead of execute SlimeSend0 can also be used as:- :SlimeSend0 'cd '.getcwd()<CR> 
+	" But I don't know how to send an <Enter>
+
+	nnoremap <Leader>r :execute 'SlimeSend1 ' @r<CR>
+endfunction
+autocmd BufReadPost,BufNewFile *.f*, call Slime_Tmux_Fortran_commands()
+
 
 """"""""""""""""""""""""""""" Jupyter-vim  """""""""""""""""""""""""""""
 function! Jupyter_vim_qtconsole_commands()
