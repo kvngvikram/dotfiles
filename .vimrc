@@ -12,7 +12,6 @@
 "
 " Reserved marks:
 " z - temporary mark
-" i - <Leader>i mapping to insert at last edited location
 "
 " This configuration assumes that vim is running inside a tmux session (while
 " writing this, byobu is used instead of tmux).
@@ -92,8 +91,6 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'jceb/vim-orgmode'
-
 Plug 'lervag/vimtex'
 
 Plug 'rhysd/vim-grammarous'
@@ -105,6 +102,8 @@ Plug 'tomasiser/vim-code-dark'
 
 Plug 'ryanoasis/vim-devicons'
 " requires fonts https://github.com/ryanoasis/nerd-fonts
+
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 call plug#end()
 " To install new plugins enter this command once vim in opened 
@@ -294,8 +293,6 @@ inoremap kj <Esc>:w<CR>mi:pclose<CR>
 " Without closing the preview split
 inoremap KJ <Esc>:w<CR>mi
 
-" Insert at the last inserted position
-nnoremap <Leader>i `ia
 
 vnoremap <Leader><Leader> <Esc><Esc>
 nnoremap <Leader><Leader> <Esc>:w<CR><Esc>
@@ -370,7 +367,7 @@ function! Tex_file_commands()
 	syn match AcronymNoSpell '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
 	" Jump to next and previous misspelled words
 	nnoremap <Leader>n ]s
-	nnoremap <Leader>N [s
+	nnoremap <Leader>p [s
 
 	" Grammer check
 	nmap <Leader>g :GrammarousCheck<CR>

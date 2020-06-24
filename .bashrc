@@ -174,9 +174,11 @@ alias xo='xdg-open'
 # 	fi
 # fi
 
+######################### python don't make __pycache__ folder. Env variable
+export PYTHONDONTWRITEBYTECODE='non-empty string'
 
 ######################### pgi compilers
-export PGI=$HOME/my_bin;
-export PATH=$HOME/my_bin/linux86-64/19.10/bin:$PATH;
-export MANPATH="$MANPATH":$HOME/my_bin/linux86-64/19.10/man;
-export LM_LICENSE_FILE="$LM_LICENSE_FILE":$HOME/my_bin/license.dat;
+export PGI=$HOME/custom_installs/PGI_install;
+export PATH=$HOME/custom_installs/PGI_install/linux86-64/19.10/bin:$PATH;
+export MANPATH="$MANPATH":$HOME/custom_installs/PGI_install/linux86-64/19.10/man;
+export LM_LICENSE_FILE="$LM_LICENSE_FILE":$HOME/custom_installs/PGI_install/license.dat;

@@ -26,6 +26,7 @@ gui_install:
 	apt install -y redshift-gtk
 	apt install -y safeeyes
 	apt install -y indicator-multiload
+	apt install -y gparted
 
 browser:
 	apt install -y browser-plugin-freshplayer-pepperflash
@@ -44,3 +45,7 @@ hotspot:
 # for openacc with gfortran
 # apt install nvidia-cuda-toolkit
 # apt install gcc-offload-nvptx
+
+# For virtual second display based on vnc check the following
+# https://github.com/mrenrich84/vnc_virtual_display_linker
+# https://github.com/kbumsik/VirtScreen
