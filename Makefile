@@ -6,6 +6,7 @@ link:
 	ln -s $(CURDIR)/.latexmkrc ~/.latexmkrc
 	ln -s $(CURDIR)/init.vim ~/.config/nvim/init.vim
 	ln -s $(CURDIR)/zathurarc ~/.config/zathura/zathurarc
+	ln -s $(CURDIR)/toggle_virtual_screen_vnc ~/custom_installs/my_bin/toggle_virtual_screen_vnc
 force:
 	ln -sf $(CURDIR)/.bashrc ~/.bashrc
 	ln -sf $(CURDIR)/.vimrc ~/.vimrc
@@ -13,6 +14,7 @@ force:
 	ln -sf $(CURDIR)/.latexmkrc ~/.latexmkrc
 	ln -sf $(CURDIR)/init.vim ~/.config/nvim/init.vim
 	ln -sf $(CURDIR)/zathurarc ~/.config/zathura/zathurarc
+	ln -sf $(CURDIR)/toggle_virtual_screen_vnc ~/custom_installs/my_bin/toggle_virtual_screen_vnc
 
 terminal_install:
 	apt install -y git
@@ -20,6 +22,7 @@ terminal_install:
 	apt install -y byobu
 	apt install -y fonts-powerline
 	apt install -y ranger
+	apt install -y htop
 
 gui_install:
 	apt install -y zathura
@@ -45,6 +48,8 @@ hotspot:
 # for openacc with gfortran
 # apt install nvidia-cuda-toolkit
 # apt install gcc-offload-nvptx
+
+# to see integrated intel gpu usage use intel_gpu_top from intel-gpu-tools
 
 # For virtual second display based on vnc check the following
 # https://github.com/mrenrich84/vnc_virtual_display_linker

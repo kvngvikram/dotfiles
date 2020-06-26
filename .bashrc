@@ -182,3 +182,6 @@ export PGI=$HOME/custom_installs/PGI_install;
 export PATH=$HOME/custom_installs/PGI_install/linux86-64/19.10/bin:$PATH;
 export MANPATH="$MANPATH":$HOME/custom_installs/PGI_install/linux86-64/19.10/man;
 export LM_LICENSE_FILE="$LM_LICENSE_FILE":$HOME/custom_installs/PGI_install/license.dat;
+
+######################### custom bin
+export PATH=$HOME/custom_installs/my_bin/:$PATH;
