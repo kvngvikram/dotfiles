@@ -78,7 +78,7 @@ Plug 'mattn/vim-lsp-settings'
 " for NeoVim install : pip install pynvim
 
 " For browser only for Neovim above 0.4
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " For indent guides/lines
 Plug 'Yggdroot/indentLine'
@@ -103,7 +103,11 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'ryanoasis/vim-devicons'
 " requires fonts https://github.com/ryanoasis/nerd-fonts
 
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" my plugins
+Plug 'kvngvikram/rightclick-macros'
+" Plug 'kvngvikram/uss-mouse.vim'
 
 call plug#end()
 " To install new plugins enter this command once vim in opened 
@@ -166,6 +170,9 @@ let g:jupyter_mapkeys='0'
 """"""""""""""""""""""""""""" NERDTree-tabs
 nnoremap <Leader>t :NERDTreeTabsToggle<CR>
 
+""""""""""""""""""""""""""""" FZF
+nnoremap <Leader>f :FZF<CR>
+
 """"""""""""""""""""""""""""" vim-tmux-navigator
 let g:tmux_navigator_no_mappings = 1
 nnoremap <M-h> :TmuxNavigateLeft<cr>
@@ -212,7 +219,7 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 "set expandtab
- 
+
 let fortran_free_source=1
 let fortran_do_enddo=1
 filetype plugin on 
@@ -243,8 +250,8 @@ set autochdir
 set wildmenu
 
 " Remember foldings
-autocmd BufLeave,BufWinLeave * silent! mkview
-autocmd BufReadPost * silent! loadview
+" autocmd BufLeave,BufWinLeave * silent! mkview
+" autocmd BufReadPost * silent! loadview
 " Give first line of fold as fold name
 "set foldtext=getline(v:foldstart)
 set foldtext=foldtext()
@@ -256,6 +263,22 @@ set clipboard=unnamedplus
 " set mouse support on
 " features: visual select, cursor position, scrolling
 set mouse=a
+" go to insert mode at location of mouse click
+" nnoremap <LeftMouse> <LeftMouse>i
+" copy with ctrl+c in visual mode. Mouse can be used to visual select.
+vnoremap <C-c> y
+" cut same as copy
+vnoremap <C-x> d
+" Backspace will also work as cut
+vnoremap <BS> d
+" paste at curser line (not box). Mouse click can take cursor to that location
+inoremap <C-v> <C-o>P
+" Also <C-v> is used to type literal characters, so now use <C-l> instead
+inoremap <C-l> <C-v>
+" save file
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>
+
 
 " color column
 set colorcolumn=80
@@ -273,7 +296,7 @@ highlight SpellCap ctermbg=DarkBlue
 highlight SpellLocal ctermbg=DarkBlue
 highlight SpellRare ctermbg=DarkBlue
 highlight Pmenu ctermbg=239 ctermfg=white
-highlight PmenuSel ctermfg=white
+" highlight PmenuSel ctermfg=white
 highlight Folded ctermbg=17 ctermfg=159
 " ctermbg=DarkBlue
 " highlight LineNr ctermfg=LightYellow ctermbg=DarkBlue
@@ -286,12 +309,12 @@ highlight lspReference ctermfg=LightYellow ctermbg=239
 """""""""""""""""""""""""""""   mappings   """""""""""""""""""""""""""""
 " mapping Esc key in insert mode and also save the file and just Esc in
 " Also mark the location with 'i'
-inoremap kj <Esc>:w<CR>mi
+inoremap kj <Esc>:w<CR>
 
 " With closing the preview split
-inoremap kj <Esc>:w<CR>mi:pclose<CR>
+inoremap kj <Esc>:w<CR>:pclose<CR>
 " Without closing the preview split
-inoremap KJ <Esc>:w<CR>mi
+inoremap KJ <Esc>:w<CR>
 
 
 vnoremap <Leader><Leader> <Esc><Esc>
@@ -323,10 +346,10 @@ nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>sp :set spell!<CR>
 " Toggle syntax coloring
 nnoremap <Leader>sn :if exists("g:syntax_on") <Bar>
-			\	syntax off <Bar>
-			\else <Bar>
-			\	syntax on <Bar>
-			\endif <CR><CR>
+		\	syntax off <Bar>
+		\else <Bar>
+		\	syntax on <Bar>
+		\endif <CR><CR>
 
 " backspace in insert mode doesn't work sometimes if this is not done.
 set backspace=indent,eol,start         " from: https://vi.stackexchange.com/a/2163
@@ -394,6 +417,10 @@ function! Text_file_commands()
 	" Jump to next and previous misspelled words
 	nnoremap <Leader>n ]s
 	nnoremap <Leader>p [s
+
+	" Grammer check
+	nmap <Leader>g :GrammarousCheck<CR>
+	nnoremap <Leader>G :GrammarousReset<CR>
 endfunction
 " execute the following for some particular files
 autocmd BufReadPost,BufNewFile *.txt, call Text_file_commands()
@@ -626,3 +653,6 @@ autocmd BufReadPost,BufNewFile *.py, call Slime_Tmux_Py_commands()
 " kernel/server (donno). Just ipython doesn't involve such kernel/server.
 " Also jupyter console/qtconsole doesn't have %cpaste so slime may not work
 " with jupyter (qt)console.
+"""""""""""""" END Notes for python
+
+nnoremap <Leader>ss :source ~/.vimrc<CR>

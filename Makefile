@@ -48,9 +48,17 @@ hotspot:
 # for openacc with gfortran
 # apt install nvidia-cuda-toolkit
 # apt install gcc-offload-nvptx
+#
+# or just install nvtop
 
 # to see integrated intel gpu usage use intel_gpu_top from intel-gpu-tools
 
 # For virtual second display based on vnc check the following
 # https://github.com/mrenrich84/vnc_virtual_display_linker
 # https://github.com/kbumsik/VirtScreen
+
+# for syncing two folders
+# apt install unison-gtk
+
+# for torrent client
+# apt install qbittorrent

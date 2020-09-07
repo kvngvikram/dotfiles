@@ -4,17 +4,14 @@ width=1368
 height=1024
 vnc_password='kvngvikram'
 
-a_random_number=1435
 
 # from .desktop file
-if [ -n "$1" ]; then  # if first input aurgument not empty
-	if [ $1 -eq $a_random_number ]; then  # if first input arg is same as previously decided number
-		xrandr --newmode "ipadvirtual"   53.25  "$width" 1408 1536 1704  "$height" 1027 1037 1045 +vsync
-		xrandr --addmode VIRTUAL1 ipadvirtual
-		xrandr --output VIRTUAL1 --right-of eDP1 --mode ipadvirtual
-		x11vnc -clip "$width"x"$height"+1920+0 -multiptr -viewonly -passwd $vnc_password
-		exit
-	fi
+if [ $1 == "startup" ]; then  # if first input arg is same as previously decided string
+	xrandr --newmode "ipadvirtual"   53.25  "$width" 1408 1536 1704  "$height" 1027 1037 1045 +vsync
+	xrandr --addmode VIRTUAL1 ipadvirtual
+	xrandr --output VIRTUAL1 --right-of eDP1 --mode ipadvirtual
+	x11vnc -clip "$width"x"$height"+1920+0 -multiptr -viewonly -passwd $vnc_password
+	exit
 fi
 
 if [ ! -f /usr/share/X11/xorg.conf.d/20-intel.conf ]
@@ -32,7 +29,7 @@ then
 	echo "[Desktop Entry]
 	Name=nvidia_second_virtual_screen
 	Comment=To create second virtual VNC screen by switching to intel gpu from Nvidia.
-	Exec=$(pwd)/$0 $a_random_number
+	Exec=$(pwd)/$0 startup
 	Terminal=false
 	Type=Application
 	Categories=Utility;" > $HOME/.config/autostart/tmp_nvidia_virt_screen.desktop
@@ -47,6 +44,7 @@ else
 	sudo rm /usr/share/X11/xorg.conf.d/20-intel.conf
 	rm ~/.config/autostart/tmp_nvidia_virt_screen.desktop
 
+	kill $(pgrep x11vnc)
 	xrandr --output VIRTUAL1 --off
 	xrandr --delmode VIRTUAL1 ipadvirtual
 	xrandr --rmmode ipadvirtual
