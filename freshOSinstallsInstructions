@@ -65,7 +65,7 @@ Others:
 For changing stuff in root directory open file manager by typing in terminal : 
 	sudo nautilus
 
-OpenCV installation in python : https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.htmlhttps://drive.google.com/drive/folders/1hlO5jsHX-34kGIaLiIlqp4ACdFYT19jp
+OpenCV installation in python : https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html/drive.google.com/drive/folders/1hlO5jsHX-34kGIaLiIlqp4ACdFYT19jp
 
 Check https://www.howtogeek.com/118222/htg-explains-what-apparmor-is-and-how-it-secures-your-ubuntu-system/
 https://www.thegeekstuff.com/2014/03/apparmor-ubuntu/
