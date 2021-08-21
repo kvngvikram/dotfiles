@@ -1,5 +1,3 @@
-" Things to note: 
-"
 " If you are using NeoVim instead of Vim then do as following to just use this
 " .vimrc script for NeoVim as well.
 " Links: 
@@ -88,8 +86,8 @@ Plug 'vim/killersheep'
 
 Plug 'tpope/vim-commentary'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
 
 Plug 'lervag/vimtex'
 
@@ -108,6 +106,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " my plugins
 Plug 'kvngvikram/rightclick-macros'
 " Plug 'kvngvikram/uss-mouse.vim'
+
+" julia support
+Plug 'JuliaEditorSupport/julia-vim'
 
 call plug#end()
 " To install new plugins enter this command once vim in opened 
@@ -179,11 +180,17 @@ nnoremap <M-h> :TmuxNavigateLeft<cr>
 nnoremap <M-j> :TmuxNavigateDown<cr>
 nnoremap <M-k> :TmuxNavigateUp<cr>
 nnoremap <M-l> :TmuxNavigateRight<cr>
+" nnoremap h :TmuxNavigateLeft<cr>
+" nnoremap j :TmuxNavigateDown<cr>
+" nnoremap k :TmuxNavigateUp<cr>
+" nnoremap l :TmuxNavigateRight<cr>
 
 
 """"""""""""""""""""""""""""" SyntaxRange
 " For python in .sh scripts
 autocmd BufReadPost,BufNewFile *.sh, :call SyntaxRange#Include('#python_begin','#python_end','python','NonText')
+" For awk in .sh scripts
+autocmd BufReadPost,BufNewFile *.sh, :call SyntaxRange#Include('#awk_begin','#awk_end','awk','NonText')
 
 """"""""""""""""""""""""""""" vim-airline
 "" For colors check the colors-section
@@ -193,7 +200,7 @@ let g:airline_powerline_fonts = 1
 """"""""""""""""""""""""""""" indentLine
 "let g:indentLine_setColors = 0
 "let g:indentLine_color_term = 239
-let g:indentLine_char = '|'
+let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 "let g:indentLine_concealcursor = 'inc'
 "let g:indentLine_conceallevel = 1
@@ -219,6 +226,11 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 "set expandtab
+
+
+" ignorecase and smartcase while searching
+set ignorecase
+set smartcase
 
 let fortran_free_source=1
 let fortran_do_enddo=1
@@ -249,12 +261,29 @@ set autochdir
 " completion in command mode for vim (defalut enabled in neovim)
 set wildmenu
 
-" Remember foldings
-" autocmd BufLeave,BufWinLeave * silent! mkview
+" foldmethod as defualt
+set foldmethod=manual
+
+" Remember foldings, cursor positions etc
+autocmd BufLeave,BufWinLeave * silent! mkview
 " autocmd BufReadPost * silent! loadview
+
+function! My_loadview()
+	redir => my_filename
+		file
+	redir end
+
+	echo my_filename
+	" don't loadview if the filename contains '.gz' i.e. don't loadview .gz
+	if stridx(my_filename, '.gz') < 0
+		silent! loadview
+	endif
+endfunction
+autocmd BufReadPost *, call My_loadview()
+
 " Give first line of fold as fold name
-"set foldtext=getline(v:foldstart)
-set foldtext=foldtext()
+set foldtext=getline(v:foldstart)
+" set foldtext=foldtext()
 
 " use default system clipboard for copy-pasting
 " this will enable copy paste to and from vim using d, y and p
@@ -272,7 +301,7 @@ vnoremap <C-x> d
 " Backspace will also work as cut
 vnoremap <BS> d
 " paste at curser line (not box). Mouse click can take cursor to that location
-inoremap <C-v> <C-o>P
+" inoremap <C-v> <C-o>P
 " Also <C-v> is used to type literal characters, so now use <C-l> instead
 inoremap <C-l> <C-v>
 " save file
@@ -291,13 +320,10 @@ highlight CursorLine ctermbg=236
 highlight Search ctermbg=DarkYellow ctermfg=White
 highlight LineNr ctermfg=Yellow
 highlight MatchParen ctermbg=Blue ctermfg=LightYellow
-highlight SpellBad ctermbg=red
-highlight SpellCap ctermbg=DarkBlue
-highlight SpellLocal ctermbg=DarkBlue
-highlight SpellRare ctermbg=DarkBlue
 highlight Pmenu ctermbg=239 ctermfg=white
 " highlight PmenuSel ctermfg=white
-highlight Folded ctermbg=17 ctermfg=159
+" highlight Folded ctermbg=17 ctermfg=159
+highlight Folded ctermbg=None ctermfg=159
 " ctermbg=DarkBlue
 " highlight LineNr ctermfg=LightYellow ctermbg=DarkBlue
 " highlight LspWarningHighlight ctermbg=brown
@@ -305,6 +331,26 @@ highlight Folded ctermbg=17 ctermfg=159
 "highlight link LspWarningHighlight hl-Ignore
 "highlight lspReference ctermfg=lightyellow ctermbg=darkgrey
 highlight lspReference ctermfg=LightYellow ctermbg=239
+
+"
+""""""""""""""""""""""""""""" spell-section"""""""""""""""""""""""""""""
+" highlight SpellBad ctermbg=red
+highlight SpellBad cterm=undercurl ctermfg=None
+" highlight SpellCap ctermbg=DarkBlue
+" highlight SpellCap cterm=undercurl ctermfg=LightBlue
+highlight SpellCap cterm=undercurl ctermfg=None
+highlight SpellLocal cterm=undercurl ctermbg=None
+highlight SpellRare cterm=undercurl ctermbg=None
+" highlight SpellLocal ctermbg=DarkBlue
+" highlight SpellRare ctermbg=DarkBlue
+
+" highlight AcronymNoSpell cterm=italic ctermfg=white
+" highlight UrlNoSpell cterm=underline ctermfg=blue
+" match AcronymNoSpell '\<\u\+\>'
+" match UrlNoSpell '\w\+:\/\/[^[:space:]]\+'
+" syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
+" syn match AcronymNoSpell '\<\(\u\|\d\)\{2,}s\?\>' contains=@NoSpell
+" syn match AcronymNoSpell '\u\+' contains=@NoSpell
 
 """""""""""""""""""""""""""""   mappings   """""""""""""""""""""""""""""
 " mapping Esc key in insert mode and also save the file and just Esc in
@@ -330,7 +376,8 @@ nnoremap <expr> k v:count == 0 ? 'gk' : "\<Esc>".v:count.'k'
 
 " General_Vimux_mapping
 " nnoremap <Leader>r :call VimuxRunCommand(@r)<CR>
-nnoremap <Leader>r :!<C-r>r<CR><CR>
+" nnoremap <Leader>r :!<C-r>r<CR><CR>
+nnoremap <Leader>r :!<C-r>r<CR>
 
 " for warpping lines
 nnoremap <Leader>w :set wrap!<CR>
@@ -380,14 +427,7 @@ function! Tex_file_commands()
 	set linebreak
 
 	nnoremap <CR> z=1<ENTER><ENTER> 
-	" Donn't mark URL-like things as spelling errors
-	syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
-	" Don't count acronyms / abbreviations as spelling errors
-	" (all upper-case letters, at least three characters)
-	" Also will not count acronym with 's' at the end a spelling error
-	" Also will not count numbers that are part of this
-	" Recognizes the following as correct:
-	syn match AcronymNoSpell '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
+
 	" Jump to next and previous misspelled words
 	nnoremap <Leader>n ]s
 	nnoremap <Leader>p [s
@@ -404,16 +444,7 @@ function! Text_file_commands()
 	set spell
 	" replace a word with the first suggestion from dictionary
 	nnoremap <CR> z=1<ENTER><ENTER> 
-	" Lines from
-	" http://www.panozzaj.com/blog/2016/03/21/ignore-urls-and-acroynms-while-spell-checking-vim/
-	" Donn't mark URL-like things as spelling errors
-	syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
-	" Don't count acronyms / abbreviations as spelling errors
-	" (all upper-case letters, at least three characters)
-	" Also will not count acronym with 's' at the end a spelling error
-	" Also will not count numbers that are part of this
-	" Recognizes the following as correct:
-	syn match AcronymNoSpell '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
+
 	" Jump to next and previous misspelled words
 	nnoremap <Leader>n ]s
 	nnoremap <Leader>p [s
@@ -430,6 +461,11 @@ function! Python_file_commands()
 	" The following is for ease of writing py2nb compactable codes.
 	nmap <Leader>o o#<Space>\|<Space>
 	nmap <Leader>O O#<Space>\|<Space>
+
+	" Foldmethod as indent for python files
+	set foldmethod=indent
+	set foldcolumn=2  " # columns before line numbers for folding indicators
+	set foldlevel=1  " folds higher than this level will be closed by default
 endfunction
 " execute the following for some particular files
 autocmd BufReadPost,BufNewFile *.py, call Python_file_commands()
@@ -574,7 +610,8 @@ function! Slime_Tmux_Py_commands()
 	let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 	let g:slime_python_ipython = 1
 
-	nnoremap <Leader>^ :!tmux split-window -d -h -p 40 'ipython --matplotlib=qt'<CR><CR>
+	nnoremap <Leader>^ :!tmux split-window -d -h -p 35 <CR><CR>
+				\:execute 'SlimeSend1 ipython --matplotlib=qt'<CR>
 				\:execute 'SlimeSend1 cd ' getcwd()<CR>
 				\:SlimeSend1 clear<CR>
 	" Instead of execute SlimeSend0 can also be used as:- :SlimeSend0 'cd '.getcwd()<CR> 
@@ -595,6 +632,8 @@ autocmd BufReadPost,BufNewFile *.py, call Slime_Tmux_Py_commands()
 "autocmd BufReadPost,BufNewFile *.py, call Jupyter_vim_console_commands()
 
 
+nnoremap <Leader>ss :source ~/.vimrc<CR>
+
 """""""""""""" Notes for python
 " qtconsole was discarded because there was an auto scrolling problem then, so
 " it had to be cleared regularly. Also it is not inside the terminal.
@@ -605,7 +644,7 @@ autocmd BufReadPost,BufNewFile *.py, call Slime_Tmux_Py_commands()
 "
 " Vimux actually suggests to use vim-cellmode to solve the above problems with
 " vimux. But cellmode will always have a line in the beginning of every text
-" packet like %load from a /tmpfile. Cellmode saves what ever is supponsed to
+" packet like %load from a /tmpfile. Cellmode saves what ever is supposed to
 " be sent to a tmp file and use vimux to send a command saying just load that
 " tmpfile. Fine for larger texts but annoying if the text sent is small like
 " one line or just a variable name. 
@@ -655,4 +694,3 @@ autocmd BufReadPost,BufNewFile *.py, call Slime_Tmux_Py_commands()
 " with jupyter (qt)console.
 """""""""""""" END Notes for python
 
-nnoremap <Leader>ss :source ~/.vimrc<CR>

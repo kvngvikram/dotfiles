@@ -23,6 +23,8 @@ terminal_install:
 	apt install -y fonts-powerline
 	apt install -y ranger
 	apt install -y htop
+	apt install -y fzf
+	apt install -y nethogs
 
 gui_install:
 	apt install -y zathura

@@ -148,14 +148,26 @@ export INSTITUTE="NARL"
 VISUAL=vim; export VISUAL EDITOR=vim; export EDITOR
 
 ######################### for ranger
-alias ranger='ranger --choosedir=$HOME/.tmp_rangerdir; LASTDIR=`cat $HOME/.tmp_rangerdir`; cd "$LASTDIR"; rm $HOME/.tmp_rangerdir'
+alias ranger='ranger --choosedir=/tmp/tmp_rangerdir; LASTDIR=`cat /tmp/tmp_rangerdir`; cd "$LASTDIR"; rm /tmp/tmp_rangerdir'
 alias rngr='ranger' # this will recursively call previous alias
+
+######################### for lf
+# alias lf='tmp_file=$(mktemp);lf -last-dir-path $tmp_file;'
+lfcd () {
+	tmp_file=$(mktemp)
+	lf -last-dir-path $tmp_file "$@"
+	cd $(cat $tmp_file)
+	rm $tmp_file
+}
+alias lf='lfcd'
 
 ######################### for xdg-open
 alias xo='xdg-open'
 
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+######################### for fzf install from apt
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/doc/fzf/examples/completion.bash
 
 
 ######################### vim
@@ -185,3 +197,11 @@ export LM_LICENSE_FILE="$LM_LICENSE_FILE":$HOME/custom_installs/PGI_install/lice
 
 ######################### custom bin
 export PATH=$HOME/custom_installs/my_bin/:$PATH;
+source "$HOME/.cargo/env" # for rust ?
+
+######################### for ARTS
+export PATH="$HOME/custom_installs/arts-2.4.0/build/src/:$PATH"
+
+export ARTS_INCLUDE_PATH="$HOME/custom_installs/arts-2.4.0/controlfiles/"
+export ARTS_DATA_PATH="$HOME/custom_installs/arts-2.4.0/arts-xml-data-2.4.0/"
+export ARTS_BUILD_PATH="$HOME/custom_installs/arts-2.4.0/build/"

@@ -81,3 +81,13 @@ For cpu usage and other stats in taskbar install
 sudo apt install indicator-multiload
 
 For offline downloading of packages check https://www.ostechnix.com/download-packages-dependencies-locally-ubuntu/
+
+To increase or decrease brightness from commandline
+gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.gnome.SettingsDaemon.Power.Screen.StepUp
+gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.gnome.SettingsDaemon.Power.Screen.StepDown
+
+To change volume from commandline. you can change the number according to your need
+pactl set-sink-volume @DEFAULT_SINK@ +2000
+pactl set-sink-volume @DEFAULT_SINK@ +2000
+To mute volume from command line
+pactl set-sink-mute @DEFAULT_SINK@ toggle
