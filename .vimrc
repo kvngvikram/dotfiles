@@ -102,6 +102,7 @@ Plug 'ryanoasis/vim-devicons'
 " requires fonts https://github.com/ryanoasis/nerd-fonts
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Plug 'JamshedVesuna/vim-markdown-preview'
 
 " my plugins
 Plug 'kvngvikram/rightclick-macros'
@@ -109,6 +110,14 @@ Plug 'kvngvikram/rightclick-macros'
 
 " julia support
 Plug 'JuliaEditorSupport/julia-vim'
+
+
+" cpyvke
+Plug 'ipselium/vim-cpyvke'
+
+" telescope
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 " To install new plugins enter this command once vim in opened 
@@ -176,10 +185,10 @@ nnoremap <Leader>f :FZF<CR>
 
 """"""""""""""""""""""""""""" vim-tmux-navigator
 let g:tmux_navigator_no_mappings = 1
-nnoremap <M-h> :TmuxNavigateLeft<cr>
-nnoremap <M-j> :TmuxNavigateDown<cr>
-nnoremap <M-k> :TmuxNavigateUp<cr>
-nnoremap <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 " nnoremap h :TmuxNavigateLeft<cr>
 " nnoremap j :TmuxNavigateDown<cr>
 " nnoremap k :TmuxNavigateUp<cr>
@@ -204,6 +213,10 @@ let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 "let g:indentLine_concealcursor = 'inc'
 "let g:indentLine_conceallevel = 1
+
+""""""""""""""""""""""""""""" markdown-preview.nvim
+let g:mkdp_auto_close = 0
+" let g:mkdp_auto_start=1
 
 """"""""""""""""""""""""""""" vimtex
 let g:vimtex_quickfix_enabled = 0  " for error message default mapping is \le
@@ -287,7 +300,7 @@ set foldtext=getline(v:foldstart)
 
 " use default system clipboard for copy-pasting
 " this will enable copy paste to and from vim using d, y and p
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 " set mouse support on
 " features: visual select, cursor position, scrolling
@@ -305,8 +318,8 @@ vnoremap <BS> d
 " Also <C-v> is used to type literal characters, so now use <C-l> instead
 inoremap <C-l> <C-v>
 " save file
-nnoremap <C-s> :w<CR>
-inoremap <C-s> <Esc>:w<CR>
+" nnoremap <C-s> :w<CR>
+" inoremap <C-s> <Esc>:w<CR>
 
 
 " color column
@@ -355,16 +368,16 @@ highlight SpellRare cterm=undercurl ctermbg=None
 """""""""""""""""""""""""""""   mappings   """""""""""""""""""""""""""""
 " mapping Esc key in insert mode and also save the file and just Esc in
 " Also mark the location with 'i'
-inoremap kj <Esc>:w<CR>
+inoremap <silent> kj <Esc>:w<CR>
 
 " With closing the preview split
-inoremap kj <Esc>:w<CR>:pclose<CR>
+inoremap <silent> kj <Esc>:w<CR>:pclose<CR>
 " Without closing the preview split
 inoremap KJ <Esc>:w<CR>
 
 
-vnoremap <Leader><Leader> <Esc><Esc>
-nnoremap <Leader><Leader> <Esc>:w<CR><Esc>
+vnoremap <silent> <Leader><Leader> <Esc><Esc>
+nnoremap <silent> <Leader><Leader> <Esc>:w<CR><Esc>
 " mapping , to showing .vimrc file in normal mode 
 nnoremap <Leader>, :tabnew ~/.vimrc<ENTER>
 
@@ -402,10 +415,10 @@ nnoremap <Leader>sn :if exists("g:syntax_on") <Bar>
 set backspace=indent,eol,start         " from: https://vi.stackexchange.com/a/2163
 
 " change split sizes
-nnoremap <C-h> <C-w><
-nnoremap <C-j> <C-w>+
-nnoremap <C-k> <C-w>-
-nnoremap <C-l> <C-w>>
+nnoremap <silent> <C-h> <C-w><
+nnoremap <silent> <C-j> <C-w>+
+nnoremap <silent> <C-k> <C-w>-
+nnoremap <silent> <C-l> <C-w>>
 
 
 
@@ -498,6 +511,8 @@ function! Slime_Tmux_commands()
 	nmap <CR> V<Plug>SlimeRegionSend
 	xmap <CR> <Plug>SlimeRegionSend
 	nnoremap <Leader>& :SlimeSend1 clear<CR>
+	nmap <Leader><CR> mzVgg<Plug>SlimeRegionSend`zzz
+	nmap <Leader>r mzggVG<Plug>SlimeRegionSend`zzz
 endfunction
 
 "autocmd BufReadPost,BufNewFile *.sh, call Vimux_commands()
@@ -605,12 +620,11 @@ endfunction
 
 """"""""""""""""""""""""""""" SlimeTmuxPy  """""""""""""""""""""""""""""
 function! Slime_Tmux_Py_commands()
-	
 	" check github page for this
 	let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}
 	let g:slime_python_ipython = 1
 
-	nnoremap <Leader>^ :!tmux split-window -d -h -p 35 <CR><CR>
+	nnoremap <Leader>^ :!tmux split-window -d -h -p 45 <CR><CR>
 				\:execute 'SlimeSend1 ipython --matplotlib=qt'<CR>
 				\:execute 'SlimeSend1 cd ' getcwd()<CR>
 				\:SlimeSend1 clear<CR>

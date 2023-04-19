@@ -167,7 +167,7 @@ alias xo='xdg-open'
 
 ######################### for fzf install from apt
 source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
+# source /usr/share/doc/fzf/examples/completion.bash
 
 
 ######################### vim
@@ -197,7 +197,6 @@ export LM_LICENSE_FILE="$LM_LICENSE_FILE":$HOME/custom_installs/PGI_install/lice
 
 ######################### custom bin
 export PATH=$HOME/custom_installs/my_bin/:$PATH;
-source "$HOME/.cargo/env" # for rust ?
 
 ######################### for ARTS
 export PATH="$HOME/custom_installs/arts-2.4.0/build/src/:$PATH"
@@ -205,3 +204,6 @@ export PATH="$HOME/custom_installs/arts-2.4.0/build/src/:$PATH"
 export ARTS_INCLUDE_PATH="$HOME/custom_installs/arts-2.4.0/controlfiles/"
 export ARTS_DATA_PATH="$HOME/custom_installs/arts-2.4.0/arts-xml-data-2.4.0/"
 export ARTS_BUILD_PATH="$HOME/custom_installs/arts-2.4.0/build/"
+
+# . "$HOME/.cargo/env"
+
