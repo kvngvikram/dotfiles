@@ -1,0 +1,131 @@
+#!/usr/bin/bash
+
+width=1368
+height=1024
+vnc_password='vnc_password'
+position='right-of'  # left-of or right-of
+
+xrandr_2nd_line=$(xrandr | head | awk 'NR==2')
+primary_name=$(echo $xrandr_2nd_line | awk '{print $1}')
+primary_width=$(echo $xrandr_2nd_line | cut -d ' ' -f 4 | cut -d x -f 1)
+primary_height=$(echo $xrandr_2nd_line | cut -d ' ' -f 4 | cut -d x -f 2 | cut -d + -f 1)
+
+vnc_x_offset=$(echo $primary_width)  # or 0, change it if position is changed
+primary_x_offset=$(echo $width)
+
+xconf_file_name='20-intel-virtual-screen.conf'
+xconf_file_folder='/usr/share/X11/xorg.conf.d/'
+
+
+mode_name='ipadvirtual'
+
+if [ "$1" == "" ]
+then
+	echo arguments required, possible arguments are start, setup, stop and clean
+	exit
+fi
+
+# from .desktop file
+# .desktop file will execute this script with 'start' as input argument
+if [ "$1" == "start" ]
+then
+	if [ -f $xconf_file_folder/$xconf_file_name ]
+	then
+
+
+		if [ "$2" == "left" ]
+		then
+			position="left-of"
+			vnc_x_offset='0'
+			primary_x_offset=$(echo $width)
+		elif [ "$2" == "right" ]
+		then
+			position="right-of"
+			vnc_x_offset=$(echo $primary_width)
+			primary_x_offset='0'
+		fi
+
+		# echo $primary_name $primary_x_offset $vnc_x_offset
+		# echo --output $primary_name  --pos "$primary_x_offset"x0 --output VIRTUAL1 --pos "$vnc_x_offset"x0
+
+
+		xrandr --newmode $mode_name $(gtf $width $height 60 | awk 'NR==3 {$1=$2=""; print}')
+		xrandr --addmode VIRTUAL1 $mode_name
+
+		xrandr --output VIRTUAL1 --$position $primary_name
+		# xrandr --output $primary_name  --pos "$primary_x_offset"x0 --output VIRTUAL1 --pos "$vnc_x_offset"x0
+
+		x11vnc -clip "$width"x"$height"+"$vnc_x_offset"+0 -multiptr -viewonly -passwd $vnc_password
+	else
+		echo $xconf_file_name does not exist in $xconf_file_folder
+		echo exiting
+	fi
+	exit
+fi
+
+# if [ ! -f $xconf_file_folder/$xconf_file_name ]
+if [ "$1" == "setup" ]
+then
+	echo $xconf_file_name does not exist.
+	echo Enabling
+	echo creating $xconf_file_name and .desktop autstart entry. Logout to see changes.
+
+	echo 'Section "Device"
+			Identifier "intelgpu0"
+			Driver "intel"
+			Option "VirtualHeads" "2"
+	EndSection' | sudo tee $xconf_file_folder/$xconf_file_name > /dev/null
+
+	echo "
+[Desktop Entry]
+Type=Application
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Exec=$0 start $2
+Terminal=false
+Name=nvidia_second_virtual_screen
+Comment=To create second virtual VNC screen by switching to intel gpu from Nvidia.
+Name[en_US]=nvidia_second_virtual_screen
+Comment[en_US]=To create second virtual VNC screen by switching to intel gpu from Nvidia.
+Categories=Utility
+	"> $HOME/.config/autostart/tmp_nvidia_virt_screen.desktop
+
+	exit
+	# sudo pkill -u happy
+	# sudo service lightdm restart
+fi
+
+if [ "$1" == "stop" ]
+then
+	echo Killing x11vnc and removing the screen.
+	echo If you want you can run run the clean command
+
+	kill $(pgrep x11vnc)
+	xrandr --output VIRTUAL1 --off
+	xrandr --delmode VIRTUAL1 $mode_name
+	xrandr --rmmode $mode_name
+
+	exit
+	# sudo pkill -u happy
+	# sudo service lightdm restart
+fi
+
+
+
+if [ "$1" == "clean" ]; then  # if first input arg is same as previously decided string
+
+	echo cleaning everything
+
+	echo removing $xconf_file_name, enter sudo password
+	sudo rm $xconf_file_folder/$xconf_file_name 2> /dev/null
+
+	echo removing autostart entry
+	rm ~/.config/autostart/tmp_nvidia_virt_screen.desktop 2> /dev/null
+
+	echo killing all x11vnc processes if any and deleting $mode_name virtual mode with xrandr if any
+	kill $(pgrep x11vnc) 2> /dev/null
+	xrandr --output VIRTUAL1 --off 2> /dev/null
+	xrandr --delmode VIRTUAL1 $mode_name 2> /dev/null
+	xrandr --rmmode $mode_name 2> /dev/null
+fi

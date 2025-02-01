@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=bash -c 'WINEPREFIX=/home/happy/installs_and_builds/envi_wine_prefix /home/happy/bin/wine /home/happy/installs_and_builds/envi_wine_prefix/drive_c/Program\ Files/Harris/ENVI55/ENVI\ Classic\ +\ IDL\ \(64-bit\).lnk'
+Name=Envi Classic + IDL 64-bit
+Icon=/home/happy/Pictures/icons/envi_logo.png
+Comment=Envi Classic + IDL 64-bit run by wine

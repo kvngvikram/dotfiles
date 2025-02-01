@@ -1,0 +1,7 @@
+dot_local_share/nvim/mason/packages/lua-language-server/extension/server/log
+dot_local_share/nvim/mason/packages/lua-language-server/libexec/log
+dot_local_share/nvim/telescope_history
+__pycache__
+dot_config/lazygit/state.yml
+misc/Miniconda3-latest-Linux-x86_64.sh
+dot_local_share/nvim

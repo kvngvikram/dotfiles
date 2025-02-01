@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=/home/happy/bin/KeePassXC-2.7.9-x86_64.AppImage
+Name=KeePassXC
+Icon=/home/happy/Pictures/icons/KeePassXC.png
+Comment=KeePassXC

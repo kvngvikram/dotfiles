@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=bash -c 'WINEPREFIX=/home/happy/installs_and_builds/viewspec_wine_prefix /home/happy/bin/wine /home/happy/installs_and_builds/viewspec_wine_prefix/drive_c/Program\ Files\ \(x86\)/ASD/ViewSpecPro/ViewSpecPro.exe'
+Name=View Spec Pro
+Icon=/home/happy/Pictures/icons/ASD.png
+Comment=View Spec Pro for ASD spectra analysis run by Wine

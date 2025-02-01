@@ -1,0 +1,5 @@
+auto_activate_base: false
+# ssl_verify: false
+# channels:
+#   - http://ipaddress/conda-mirror/channel-name/
+channel_priority: flexible

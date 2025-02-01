@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=bash -c 'MLM_LICENSE_FILE=entries_seperated_by_comma_and_of_form_number_at_web_or_ip_address /home/happy/bin/matlab'
+Name=matlab
+Icon=/home/happy/Pictures/icons/matlab.png
+Comment=MATLAB
+Terminal=true

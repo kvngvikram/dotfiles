@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=/home/happy/bin/FreeCAD_1.0.0-conda-Linux-x86_64-py311.AppImage
+Name=FreeCAD appimage
+Icon=/home/happy/Pictures/icons/FreeCAD.png
+Comment=FreeCAD appimage

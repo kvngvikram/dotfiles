@@ -1,0 +1,17 @@
+# importing numpy, matplotlib and pandas
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import glob
+
+
+
+print("")
+print("")
+print("  beep bop beep bop ...")
+print("  Hello World!")
+print("  The singularity is here ...")
+print("  By the end of the day, silicon will take over carbon *sinical laugh*")
+print("")
+
+

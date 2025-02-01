@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+# opus viewer should be run with the default wine prefix, that will be created as ~/.wine-appimage/
+# Opus viewer is like a portable version, which doesn't need any installation
+Exec=/home/happy/bin/wine /home/happy/installs_and_builds/opus_viewer_windows_version/OPUS.exe
+Name=Opus viewer
+Icon=/home/happy/Pictures/icons/opus_logo.png
+Comment=Opus viewer to view opus spectra run by Wine
