@@ -34,9 +34,10 @@ pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 
 For using these dotfiles in a different system/username all the links that point to /home/happy/... should be changed to new username
-find ~/dotfiles -type l -ls | grep '/home/happy/'  | awk '{print $13, $11}' | sed -r 's/oldusername/newusername/' | xargs -l bash -c 'ln -sf $0 $1'
 And then change the text in the files where there is oldusername happy
-sed -i -r 's/oldusername/newusername/g' ~/dotfiles/dot_local_share/nvim/mason/bin/*
-sed -i -r 's/oldusername/newusername/g' ~/dotfiles/dot_local_share/applications/*
+
+find ~/dotfiles -type l -ls | grep '/home/happy/'  | awk '{print $13, $11}' | sed -r 's/happy/newusername/' | xargs -l bash -c 'ln -sf $0 $1'
+sed -i -r 's/happy/newusername/g' ~/dotfiles/dot_local_share/nvim/mason/bin/*
+sed -i -r 's/happy/newusername/g' ~/dotfiles/dot_local_share/applications/*
 
 you can install opencv using the instructions at https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html/drive/folders/1hlO5jsHX-34kGIaLiIlqp4ACdFYT19jp?usp=sharing
