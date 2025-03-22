@@ -33,6 +33,20 @@ return {
 			local luasnip = require('luasnip')
 			require('luasnip.loaders.from_vscode').lazy_load()
 
+			-- functions required by custom snippets
+			date = function() return {os.date('%d-%m-%Y')} end
+			local ls = require("luasnip")
+			local s = ls.snippet
+			local sn = ls.snippet_node
+			local t = ls.text_node
+			local i = ls.insert_node
+			local f = ls.function_node
+			local c = ls.choice_node
+			local d = ls.dynamic_node
+			local fmt = require("luasnip.extras.fmt").fmt
+			local rep = require("luasnip.extras").rep
+			require('luasnip.loaders.from_lua').load({paths = "~/.config/nvim/snippets"})
+
 			 -- function to be used for tab completion to check if tab should trigger completion or insert tab
 			local has_words_before = function()
 				local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
