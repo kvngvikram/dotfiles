@@ -98,10 +98,10 @@ terminal_install:
 	apt install -y expect
 
 gui_install:
-	apt install -y zathura redshift-gtk safeeyes indicator-multiload gparted thunderbird
-	apt install onlyoffice-desktopeditors ttf-mscorefonts-installer-
-	echo installed onlyoffice without Microsoft fonts !!
-	echo configure those fonts seperately, by using the option: fonts
+	apt install -y zathura redshift-gtk safeeyes gparted thunderbird
+	# apt install onlyoffice-desktopeditors ttf-mscorefonts-installer-
+	# echo installed onlyoffice without Microsoft fonts !!
+	# echo configure those fonts seperately, by using the option: fonts
 
 aegis:
 	~/installs_and_builds/miniconda3/bin/python3 -m venv ~/installs_and_builds/python_venv/aegis
