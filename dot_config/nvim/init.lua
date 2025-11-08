@@ -1,22 +1,22 @@
 -- Check and install lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out,                            "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
 -- do this before loading lazy.nvim
-vim.g.mapleader = ' '  -- mapping space as leader
+vim.g.mapleader = ' ' -- mapping space as leader
 vim.g.maplocalleader = ' '
 
 require('lazy').setup('plugins')
@@ -25,7 +25,7 @@ require('lazy').setup('plugins')
 -- using lazy.nvim
 
 
-vim.opt.updatetime = 2000  -- CursorHold event is triggerend if cursor doesn't move for this time
+vim.opt.updatetime = 2000 -- CursorHold event is triggerend if cursor doesn't move for this time
 -- updatetime is used in lsp diagnostics, and for lazy loading plugins with CursorHold event !!
 
 vim.opt.number = true
@@ -41,7 +41,7 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.cursorline = true
 vim.opt.colorcolumn = '80'
-vim.opt.spellfile = '/home/happy/.config/nvim/spell/en.utf-8.add'  -- don't give ~/ for home
+vim.opt.spellfile = '/home/happy/.config/nvim/spell/en.utf-8.add' -- don't give ~/ for home
 
 vim.opt.signcolumn = 'auto:2'
 
@@ -51,7 +51,7 @@ vim.cmd('colorscheme vscode')
 -- vim.cmd('colorscheme tokyonight-dark')
 
 
-local function vim_opt_toggle(opt, val_1, val_2, name)  -- toggle between the two values
+local function vim_opt_toggle(opt, val_1, val_2, name) -- toggle between the two values
 	local message = name
 	if vim.opt[opt]:get() == val_2 then
 		vim.opt[opt] = val_1
@@ -76,11 +76,13 @@ vim.keymap.set('n', '<leader>w', function() vim_opt_toggle("wrap", true, false, 
 vim.keymap.set('n', '<leader>,', ':tabnew ~/.config/nvim/init.lua<CR>')
 vim.keymap.set('n', '<leader>/', ':noh<CR>')
 
--- change split sizes
-vim.keymap.set('n', '<C-h>', '<C-w><')
-vim.keymap.set('n', '<C-j>', '<C-w>+')
-vim.keymap.set('n', '<C-k>', '<C-w>-')
-vim.keymap.set('n', '<C-l>', '<C-w>>')
+-- The following is set in lua/plugins/navigation.lua in the tmux navigator plugin section
+-- Because tmux-navigator is overwriting these Ctrl key plugins :( Also it should load first
+-- -- change split sizes
+-- vim.keymap.set('n', '<C-h>', '<C-w><')
+-- vim.keymap.set('n', '<C-j>', '<C-w>+')
+-- vim.keymap.set('n', '<C-k>', '<C-w>-')
+-- vim.keymap.set('n', '<C-l>', '<C-w>>')
 
 -- Map j,k so that it will move DOWN,UP line by line for long wrapped lines.
 -- Also Mapping for navigation using relative numbers when lines are wrapped

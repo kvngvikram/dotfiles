@@ -3,9 +3,9 @@ return {
 	{
 		'christoomey/vim-tmux-navigator',
 		-- event = 'VimEnter',
-		keys = {'<M-h>', '<M-j>', '<M-k>', '<M-l>'},
-		config = function ()
-			vim.g.tmux_navigator_no_mappings = 1  -- don't open at start
+		keys = { '<M-h>', '<M-j>', '<M-k>', '<M-l>' },
+		config = function()
+			vim.g.tmux_navigator_no_mappings = 1 -- don't open at start
 			vim.keymap.set('n', '<M-h>', ':TmuxNavigateLeft<cr>')
 			vim.keymap.set('n', '<M-j>', ':TmuxNavigateDown<cr>')
 			vim.keymap.set('n', '<M-k>', ':TmuxNavigateUp<cr>')
@@ -14,6 +14,13 @@ return {
 			vim.keymap.set('i', '<M-j>', '<Esc>:TmuxNavigateDown<cr>')
 			vim.keymap.set('i', '<M-k>', '<Esc>:TmuxNavigateUp<cr>')
 			vim.keymap.set('i', '<M-l>', '<Esc>:TmuxNavigateRight<cr>')
+
+			-- not related to this plugin but it is overwriting these Ctrl keys.
+			-- So doing agian here
+			vim.keymap.set('n', '<C-h>', '<C-w><')
+			vim.keymap.set('n', '<C-j>', '<C-w>+')
+			vim.keymap.set('n', '<C-k>', '<C-w>-')
+			vim.keymap.set('n', '<C-l>', '<C-w>>')
 		end
 	},
 
@@ -21,15 +28,14 @@ return {
 		'nvim-telescope/telescope.nvim',
 		-- event = 'VimEnter',
 		keys = {
-			{'<leader><leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>'},
-			{'<leader>k', '<cmd>Telescope find_files<CR>'},
+			{ '<leader><leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>' },
 		},
 		cmd = 'Telescope',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
 			-- 'nvim-treesitter/nvim-treesitter',  -- TODO: this plugin should have its own section
 			'nvim-tree/nvim-web-devicons',
-		    'nvim-telescope/telescope-ui-select.nvim',
+			'nvim-telescope/telescope-ui-select.nvim',
 			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
 				'nvim-telescope/telescope-fzf-native.nvim',
 				-- `build` is used to run some command when the plugin is installed/updated.
@@ -86,53 +92,53 @@ return {
 	},
 
 	{
-        'jakewvincent/mkdnflow.nvim',
-        config = function()
+		'jakewvincent/mkdnflow.nvim',
+		config = function()
 			require('mkdnflow').setup({
 				perspective = {
 					priority = 'root',
 					root_tell = 'index.md',
 					fallback = 'first',
 				},
-				modules = { cmp = true },  -- the default  is fase :(
+				modules = { cmp = true }, -- the default  is fase :(
 				links = {
 					conceal = true,
 					transform_explicit = function(text)
-						text = text:gsub(" ", "_")  -- no spaces, use underscores
+						text = text:gsub(" ", "_") -- no spaces, use underscores
 						-- text = text:lower()
 						-- text = os.date('%Y-%m-%d_')..text
-						if text:match('%d%d[-]%d%d[-]%d%d%d%d') then  -- the - character is tricky
-							return('dairy/'..text)
-						elseif text:match('mpr') then  -- the - character is tricky
-							return('dairy/mpr/'..text)
+						if text:match('%d%d[-]%d%d[-]%d%d%d%d') then -- the - character is tricky
+							return ('dairy/' .. text)
+						elseif text:match('mpr') then -- the - character is tricky
+							return ('dairy/mpr/' .. text)
 						elseif text:match('cite_%S+') then
-							return('citation/'..text)
+							return ('citation/' .. text)
 						elseif text:match('todo_%S+') then
-							return('todo/'..text)
+							return ('todo/' .. text)
 						elseif text:match('min_%S+') then
-							return('mineral/'..text)
+							return ('mineral/' .. text)
 						elseif text:match('book_%S+') then
-							return('book/'..text)
+							return ('book/' .. text)
 						else
-							return(text)
+							return (text)
 						end
 					end,
 				},
 			})
-			vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", command = "set awa"})
+			vim.api.nvim_create_autocmd("FileType", { pattern = "markdown", command = "set awa" })
 			-- Telescope find files in notebook
 			-- got idea from https://stackoverflow.com/a/73290052
 			vim.keymap.set('n', '<Leader>k', function()
 				if vim.o.filetype == 'markdown' then
 					local root_dir = require('mkdnflow').root_dir
-					if root_dir then  -- if the dir is not nil
-						return ':Telescope find_files search_dirs={"'..root_dir..'"}<CR>'
+					if root_dir then -- if the dir is not nil
+						return ':Telescope find_files search_dirs={"' .. root_dir .. '"}<CR>'
 					end
 				end
-			end, {expr = true, replace_keycodes = true})
-        end,  -- end of the config = function()
+			end, { expr = true, replace_keycodes = true })
+		end, -- end of the config = function()
 		ft = { 'markdown' },
-    },
+	},
 
 	{
 		"iamcco/markdown-preview.nvim",
