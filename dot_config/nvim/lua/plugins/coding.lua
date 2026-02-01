@@ -12,8 +12,8 @@ return {
 			-- A list of parser names, or 'all' (the five listed parsers should always be installed)
 			-- Comment ensure_installed if no internet
 			ensure_installed = { 'fortran', 'python', 'julia', 'bash', 'matlab', 'c',
-								 'lua', 'luadoc', 'vim', 'vimdoc', 'query', 'diff', 'latex',
-								 'markdown', 'markdown_inline'},
+				'lua', 'luadoc', 'vim', 'vimdoc', 'query', 'diff', 'latex',
+				'markdown', 'markdown_inline' },
 			auto_install = true,
 			highlight = true,
 			incremental_selection = {
@@ -31,7 +31,7 @@ return {
 	{
 		'jbyuki/nabla.nvim',
 		dependencies = { 'nvim-treesitter/nvim-treesitter', },
-		keys = { {'<leader>l', ':lua require("nabla").popup()<CR>'}, }
+		keys = { { '<leader>l', ':lua require("nabla").popup()<CR>' }, }
 	},
 
 	{
@@ -39,22 +39,22 @@ return {
 		config = function()
 			vim.g.slime_no_mappings = 1
 			vim.g.slime_target = 'tmux'
-			vim.opt.shell = '/bin/sh'  -- set the default shell since fish is very slow
+			vim.opt.shell = '/bin/sh'
 			-- vim.g.slime_paste_file = '~/.temp_vim-slime_paste.delete_please'
 			vim.cmd('let g:slime_default_config = {"socket_name": "default", "target_pane": ":.1"}') -- check github page for this
 			vim.g.slime_dont_ask_default = 1
 		end,
-		ft = { 'python', 'sh' },  -- add more files when required
+		ft = { 'python', 'sh', 'julia' }, -- add more files when required
 	},
 
 	{
 		'lewis6991/gitsigns.nvim',
 		-- event = 'VimEnter',
 		-- event = 'UIEnter',
-		event = 'CursorHold',  -- basically after you open and wait for few seconds of 'updatetime'
+		event = 'CursorHold', -- basically after you open and wait for few seconds of 'updatetime'
 		keys = {
-			{'[g', '<cmd>Gitsigns prev_hunk<CR><Esc>:Gitsigns preview_hunk<CR>'},
-			{']g', '<cmd>Gitsigns next_hunk<CR><Esc>:Gitsigns preview_hunk<CR>'},
+			{ '[g', '<cmd>Gitsigns prev_hunk<CR><Esc>:Gitsigns preview_hunk<CR>' },
+			{ ']g', '<cmd>Gitsigns next_hunk<CR><Esc>:Gitsigns preview_hunk<CR>' },
 		},
 		cmd = 'Gitsigns',
 		opts = {},
@@ -74,7 +74,7 @@ return {
 			-- VimTeX configuration goes here, e.g.
 			vim.g.vimtex_view_method = "zathura"
 		end,
-		ft = { 'tex' },  -- add more files when required
+		ft = { 'tex' }, -- add more files when required
 	}
 
 }

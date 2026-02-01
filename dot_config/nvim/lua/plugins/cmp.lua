@@ -17,15 +17,34 @@ return {
 		},
 		event = 'InsertEnter',
 		config = function()
-
 			-- setting up nvim-cmp
 			-- symbols to use in completion menu
-			local kind_icons = { Text = '', Method = '', Function = '',
-				Constructor = '', Field = '', Variable = '', Class = 'ﴯ', Interface = '',
-				Module = '', Property = 'ﰠ', Unit = '', Value = '', Enum = '',
-				Keyword = '', Snippet = '', Color = '', File = '', Reference = '',
-				Folder = '', EnumMember = '', Constant = '', Struct = '', Event = '',
-				Operator = '', TypeParameter = ''
+			local kind_icons = {
+				Text = '',
+				Method = '',
+				Function = '',
+				Constructor = '',
+				Field = '',
+				Variable = '',
+				Class = 'ﴯ',
+				Interface = '',
+				Module = '',
+				Property = 'ﰠ',
+				Unit = '',
+				Value = '',
+				Enum = '',
+				Keyword = '',
+				Snippet = '',
+				Color = '',
+				File = '',
+				Reference = '',
+				Folder = '',
+				EnumMember = '',
+				Constant = '',
+				Struct = '',
+				Event = '',
+				Operator = '',
+				TypeParameter = ''
 			}
 
 
@@ -34,7 +53,7 @@ return {
 			require('luasnip.loaders.from_vscode').lazy_load()
 
 			-- functions required by custom snippets
-			date = function() return {os.date('%d-%m-%Y')} end
+			date = function() return { os.date('%d-%m-%Y') } end
 			local ls = require("luasnip")
 			local s = ls.snippet
 			local sn = ls.snippet_node
@@ -45,15 +64,16 @@ return {
 			local d = ls.dynamic_node
 			local fmt = require("luasnip.extras.fmt").fmt
 			local rep = require("luasnip.extras").rep
-			require('luasnip.loaders.from_lua').load({paths = "~/.config/nvim/snippets"})
+			require('luasnip.loaders.from_lua').load({ paths = "~/.config/nvim/snippets" })
 
-			 -- function to be used for tab completion to check if tab should trigger completion or insert tab
+			-- function to be used for tab completion to check if tab should trigger completion or insert tab
 			local has_words_before = function()
 				local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line -1, line, true)[1]:sub(col, col):match('%s') == nil
+				return col ~= 0 and
+					vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 			end
 
-			cmp.setup({  -- generic setup
+			cmp.setup({ -- generic setup
 
 				snippet = {
 					expand = function(args)
@@ -102,6 +122,7 @@ return {
 					{ name = 'path' },
 					{ name = 'emoji' },
 					{ name = 'mkdnflow' },
+					{ name = 'cmp_ai' },
 				}),
 
 
@@ -126,18 +147,18 @@ return {
 				window = { documentation = cmp.config.window.bordered() },
 			})
 
-			cmp.setup.cmdline('/', {  -- for searchs only use contents in buffer
+			cmp.setup.cmdline('/', { -- for searchs only use contents in buffer
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{ name = 'buffer' }
 				}
 			})
 
-			cmp.setup.cmdline(':', {  -- for cmdline both file/folders and cmdline stuff
+			cmp.setup.cmdline(':', { -- for cmdline both file/folders and cmdline stuff
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({
 					{ name = 'path' },
-					{ name = 'cmdline'},
+					{ name = 'cmdline' },
 				})
 			})
 
@@ -159,9 +180,8 @@ return {
 			-- end,
 			-- {remap=true}
 			-- )
-			vim.keymap.set({'i', 's'}, '<C-l>', function() ls.jump( 1) end, {silent = true})
-			vim.keymap.set({'i', 's'}, '<C-k>', function() ls.jump(-1) end, {silent = true})
-
+			vim.keymap.set({ 'i', 's' }, '<C-l>', function() ls.jump(1) end, { silent = true })
+			vim.keymap.set({ 'i', 's' }, '<C-k>', function() ls.jump(-1) end, { silent = true })
 		end,
 	},
 

@@ -19,7 +19,7 @@ return { -- language support
 			require('mason-lspconfig').setup {
 				-- ensure_installed = {'pylsp', 'luals'}
 				ensure_installed = { 'lua_ls', 'pylsp', 'ltex', 'clangd', 'fortls' }
-				-- ensure_installed = { 'lua_ls', 'pylsp', 'ltex', 'clangd', 'fortls', 'julials' }
+				-- julials configured seperately later
 			} -- alternative to lsp.config.enable('servername') but before the config and not after
 
 
@@ -47,127 +47,50 @@ return { -- language support
 			}
 			-- vim.lsp.enable('luals')
 
-			-- -- python
-			-- vim.lsp.config['pylsp'] = {
-			-- 	-- Command and arguments to start the server.
-			-- 	-- cmd = { 'pyright' },
-			-- 	-- Filetypes to automatically attach to.
-			-- 	filetypes = { 'python' },
-			-- }
-			-- -- vim.lsp.enable('pylsp')
 
-			-- -- julia
-			-- vim.lsp.config['julials'] = {
-			-- 	cmd = { '/home/happy/.local/share/nvim/mason/bin/julia-lsp' },
-			-- 	-- Filetypes to automatically attach to.
-			-- 	filetypes = { 'julia' },
-			-- }
-			-- vim.lsp.enable('julials')
-
-			-- -- local julia_ls_script = vim.fs.joinpath(vim.fn.stdpath('config'), "helpers", "julia_languageserver.jl")
-			-- local julia_ls_script = '/home/happy/temp/julia_languageserver.jl'
-			-- -- require 'lspconfig'.julials.setup({
-			-- vim.lsp.config['newjulials'] = {
-			-- 	-- cmd = { "julia", "--startup-file=no", "--history-file=no", julia_ls_script },
-			-- 	-- cmd = { "julia", "--startup-file=no", "--history-file=no", julia_ls_script },
-			-- 	cmd = { "julia", "-e", '"using LanguageServer; runserver()"'},
-			-- 	filetypes = { 'julia' },
-			-- 	-- single_file_support = true,
-			-- 	-- on_attach = function(_, bufnr)
-			-- 	-- 	-- Disable automatic formatexpr since the LS.jl formatter isn't so nice.
-			-- 	-- 	vim.bo[bufnr].formatexpr = ''
-			-- 	-- end,
-			-- 	-- capabilities = capabilities,
-			-- 	-- })
-			-- }
-			-- vim.lsp.enable('newjulials')
-
-			-- vim.lsp.config['julials'] = {
-			-- 	cmd = { '' },
-			-- 	filetypes = { 'julia' },
-			-- 	root_markers = { 'Project.toml', 'Manifest.toml' },
-			-- 	settings = {
-			-- 		require 'lspconfig'.julials.setup {
-			-- 			on_new_config = function(new_config, _)
-			-- 				local julia = vim.fn.expand("~/.julia/environments/lsp/")
-			-- 				if require 'lspconfig'.util.path.is_file(julia) then
-			-- 					new_config.cmd[1] = julia
-			-- 				end
-			-- 			end
-			-- 		}
-			-- 	}
-			-- }
-			-- vim.lsp.enable('julials')
-
-			-- -- Run Julia LSP
-			-- -- https://forem.julialang.org/navi/set-up-neovim-tmux-for-a-data-science-workflow-with-julia-3ijk
-			-- require 'lspconfig'.julials.setup {
-			-- 	on_new_config = function(new_config, _)
-			-- 		local julia = vim.fn.expand(
-			-- 			"/home/happy/installs_and_builds/juliaup-1.18.9-x86_64-unknown-linux-musl-portable/julia")
-			-- 		if require 'lspconfig'.util.path.is_file(julia) then
-			-- 			-- vim.notify("Hello!")
-			-- 			new_config.cmd[1] = julia
-			-- 		end
-			-- 	end
-			-- }
-
-			-- -- julia
-			-- vim.lsp.config['blajulials'] = {
-			-- 	-- cmd = { "julia", "--startup-file=no", "--history-file=no", "/home/happy/temp/bare_minimum.jl" },
-			-- 	cmd = {
-			-- 		-- "/home/happy/installs_and_builds/juliaup-1.18.9-x86_64-unknown-linux-musl-portable/julia",
-			-- 		"julia",
-			-- 		-- "--startup-file=no", "--history-file=no", "/home/happy/temp/bare_minimum.jl",
-			-- 		-- "--startup-file=no", "--history-file=no", "/home/happy/temp/julia_languageserver.jl",
-			-- 		"--startup-file=no", "--history-file=no", "-e",
-			-- 		'using LanguageServer; server = LanguageServer.LanguageServerInstance(stdin, stdout, "", ""); server.runlinter = true; run(server)'
-			-- 	},
-			-- 	-- Filetypes to automatically attach to.
-			-- 	filetypes = { 'julia' },
-			-- 	settings = {},
-			-- }
-			-- vim.lsp.enable('blajulials')
-
-			-- vim.lsp.config('julials', {
-			-- 	cmd = {
-			-- 		"julia",
-			-- 		"--project=" .. "~/.julia/environments/lsp/",
-			-- 		"--startup-file=no",
-			-- 		"--history-file=no",
-			-- 		"-e", [[
-			-- 			using Pkg
-			-- 			Pkg.instantiate()
-			-- 			using LanguageServer
-			-- 			depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
-			-- 			project_path = let
-			-- 				dirname(something(
-			-- 					## 1. Finds an explicitly set project (JULIA_PROJECT)
-			-- 					Base.load_path_expand((
-			-- 						p = get(ENV, "JULIA_PROJECT", nothing);
-			-- 							p === nothing ? nothing : isempty(p) ? nothing : p
-			-- 						)),
-			-- 							## 2. Look for a Project.toml file in the current working directory,
-			-- 							##    or parent directories, with $HOME as an upper boundary
-			-- 							Base.current_project(),
-			-- 							## 3. First entry in the load path
-			-- 							get(Base.load_path(), 1, nothing),
-			-- 							## 4. Fallback to default global environment,
-			-- 							##    this is more or less unreachable
-			-- 						Base.load_path_expand("@v#.#"),
-			-- 					))
-			-- 				end
-			-- 			@info "Running language server" VERSION pwd() project_path depot_path
-			-- 			server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path)
-			-- 			server.runlinter = true
-			-- 			run(server)
-			-- 		]]
-			-- 	},
-			-- 	filetypes = { 'julia' },
-			-- 	root_markers = { "Project.toml", "JuliaProject.toml" },
-			-- 	settings = {}
-			-- })
-			-- vim.lsp.enable('julials')
+			-- have julia command in your path
+			-- Install "LanguageServer" in ~/.julia/environments/nvim-lspconfig
+			-- Also You need Project.toml for julia lsp to work
+			vim.lsp.config("julials", {
+				cmd = {
+					"julia",
+					"--project=" .. "~/.julia/environments/nvim-lspconfig",
+					"--startup-file=no",
+					"--history-file=no",
+					"-e",
+					[[
+						using Pkg
+						Pkg.instantiate()
+						using LanguageServer
+						depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
+						project_path = let
+						dirname(something(
+							## 1. Finds an explicitly set project (JULIA_PROJECT)
+							Base.load_path_expand((
+							p = get(ENV, "JULIA_PROJECT", nothing);
+								p === nothing ? nothing : isempty(p) ? nothing : p
+							)),
+							## 2. Look for a Project.toml file in the current working directory,
+							##    or parent directories, with $HOME as an upper boundary
+							Base.current_project(),
+							## 3. First entry in the load path
+							get(Base.load_path(), 1, nothing),
+							## 4. Fallback to default global environment,
+							##    this is more or less unreachable
+							Base.load_path_expand("@v#.#"),
+						))
+						end
+						@info "Running language server" VERSION pwd() project_path depot_path
+						server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path)
+						server.runlinter = true
+						run(server)
+					]],
+				},
+				filetypes = { "julia" },
+				root_markers = { "Project.toml", "JuliaProject.toml" },
+				settings = {},
+			})
+			vim.lsp.enable('julials')
 
 
 			-- ################################################################

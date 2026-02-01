@@ -62,7 +62,7 @@ return {
 				},
 				lualine_z = { 'tabs' },
 			},
-			inactive_sections = {  -- this is set to have distinsion with splits
+			inactive_sections = {   -- this is set to have distinsion with splits
 				lualine_a = {},
 				lualine_b = { 'branch', 'diff', -- TODO: should not be required to explicitly give these symbols, which should be default
 					{ 'diagnostics', symbols = { error = ' ', warn = ' ', info = ' ', hint = '' } } },
