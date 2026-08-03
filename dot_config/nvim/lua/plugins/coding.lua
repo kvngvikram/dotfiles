@@ -53,8 +53,8 @@ return {
 		-- event = 'UIEnter',
 		event = 'CursorHold', -- basically after you open and wait for few seconds of 'updatetime'
 		keys = {
-			{ '[g', '<cmd>Gitsigns prev_hunk<CR><Esc>:Gitsigns preview_hunk<CR>' },
-			{ ']g', '<cmd>Gitsigns next_hunk<CR><Esc>:Gitsigns preview_hunk<CR>' },
+			{ '[g', '<cmd>Gitsigns prev_hunk<CR>:Gitsigns preview_hunk_inline<CR>' },
+			{ ']g', '<cmd>Gitsigns next_hunk<CR>:Gitsigns preview_hunk_inline<CR>' },
 		},
 		cmd = 'Gitsigns',
 		opts = {},
@@ -75,6 +75,27 @@ return {
 			vim.g.vimtex_view_method = "zathura"
 		end,
 		ft = { 'tex' }, -- add more files when required
-	}
+	},
 
+	{
+		"jalvesaq/zotcite",
+		event = 'CursorHold', -- basically after you open and wait for few seconds of 'updatetime'
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim",
+		},
+		config = function()
+			require("zotcite").setup({
+				-- your options here (see doc/zotcite.txt)
+			})
+		end
+	},
+
+	{
+		'chomosuke/typst-preview.nvim',
+		-- lazy = false, -- or ft = 'typst'
+		ft = 'typst',
+		version = '1.*',
+		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
+	},
 }
