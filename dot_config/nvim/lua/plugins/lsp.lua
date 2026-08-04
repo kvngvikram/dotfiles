@@ -4,7 +4,7 @@ return { -- language support
 		'mason-org/mason-lspconfig.nvim', -- takes care of vim.lsp.enable('servername') for all servers
 		opts = {},
 		dependencies = {
-			{ 'mason-org/mason.nvim', opts = {} }, -- The Maxon interface window provider and installer
+			{ 'mason-org/mason.nvim', opts = {} }, -- The Mason interface window provider and installer
 			'neovim/nvim-lspconfig',      -- Actual native LSP configuration provider
 			'SmiteshP/nvim-navic',
 		},
@@ -18,7 +18,7 @@ return { -- language support
 
 			require('mason-lspconfig').setup {
 				-- ensure_installed = {'pylsp', 'luals'}
-				ensure_installed = { 'lua_ls', 'pylsp', 'ltex', 'clangd', 'fortls' }
+				ensure_installed = { 'lua_ls', 'pylsp', 'clangd', 'fortls', 'harper_ls', 'tinymist' }
 				-- julials configured seperately later
 			} -- alternative to lsp.config.enable('servername') but before the config and not after
 
