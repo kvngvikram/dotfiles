@@ -8,11 +8,14 @@ return {
 
 	{
 		'nvim-treesitter/nvim-treesitter',
+		branch = 'main',
+		build = ':TSUpdate',
+		main = 'nvim-treesitter.config',
 		opts = {
 			-- A list of parser names, or 'all' (the five listed parsers should always be installed)
 			-- Comment ensure_installed if no internet
 			ensure_installed = { 'fortran', 'python', 'julia', 'bash', 'matlab', 'c',
-				'lua', 'luadoc', 'vim', 'vimdoc', 'query', 'diff', 'latex',
+				'lua', 'luadoc', 'vim', 'vimdoc', 'query', 'diff', 'typst',
 				'markdown', 'markdown_inline' },
 			auto_install = true,
 			highlight = true,
@@ -79,16 +82,42 @@ return {
 
 	{
 		"jalvesaq/zotcite",
-		event = 'CursorHold', -- basically after you open and wait for few seconds of 'updatetime'
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-telescope/telescope.nvim",
 		},
-		config = function()
-			require("zotcite").setup({
-				-- your options here (see doc/zotcite.txt)
-			})
-		end
+		ft = { 'tex', 'typst', 'markdown' }, -- add more files when required
+		opts = {
+			hook = {
+				-- When author names have initials, make K.V.N.G. as K. V. N. G.
+				bib_ref = function(e) -- e is one bib entry containing info of authors, title ...
+					if not e or not e.author then -- no point if there is no author info
+						return e
+					end
+
+					local authors_tbl = {}      -- containts table for multiple (co)authors
+					for _, author_value in ipairs(e.author) do -- for each author
+						local new_author_names = {} -- table expecting two entries for last and first name
+						for _, name in ipairs(author_value) do
+							table.insert(new_author_names,
+								(name:gsub("(%.)([A-Z])", "%1 %2")))
+						end
+						table.insert(authors_tbl, new_author_names)
+					end
+
+					e.author = authors_tbl -- overwrite the author information
+					return e -- and return everything else as it is
+				end,
+			},
+		},
+	},
+
+
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function() vim.fn["mkdp#util#install"]() end,
 	},
 
 	{

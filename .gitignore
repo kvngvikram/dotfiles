@@ -9,3 +9,5 @@ dot_local_share/applications/mimeinfo.cache
 dot_local_share/applications/org.gnome.Shell.Extensions.GSConnect.Preferences.desktop
 dot_local_share/applications/org.gnome.Shell.Extensions.GSConnect.desktop
 dot_local_share/applications/userapp-Firefox-SS5T02.desktop
+dot_config/nvim/lazy-lock.json
+dot_config/pip/pip.conf

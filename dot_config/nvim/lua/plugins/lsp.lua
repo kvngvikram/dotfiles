@@ -18,7 +18,7 @@ return { -- language support
 
 			require('mason-lspconfig').setup {
 				-- ensure_installed = {'pylsp', 'luals'}
-				ensure_installed = { 'lua_ls', 'pylsp', 'clangd', 'fortls', 'harper_ls', 'tinymist' }
+				ensure_installed = { 'lua_ls', 'pylsp', 'fortls', 'harper_ls', 'tinymist' }
 				-- julials configured seperately later
 			} -- alternative to lsp.config.enable('servername') but before the config and not after
 

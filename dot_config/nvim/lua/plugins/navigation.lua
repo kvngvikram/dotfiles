@@ -91,8 +91,11 @@ return {
 		},
 	},
 
+
+
 	{
 		'jakewvincent/mkdnflow.nvim',
+		ft = { 'markdown' },
 		config = function()
 			require('mkdnflow').setup({
 				perspective = {
@@ -100,7 +103,7 @@ return {
 					root_tell = 'index.md',
 					fallback = 'first',
 				},
-				modules = { cmp = true }, -- the default  is fase :(
+				modules = { completion = true }, -- the default is false :(
 				links = {
 					conceal = true,
 					transform_explicit = function(text)
@@ -137,14 +140,6 @@ return {
 				end
 			end, { expr = true, replace_keycodes = true })
 		end, -- end of the config = function()
-		ft = { 'markdown' },
 	},
-
-	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		ft = { "markdown" },
-		build = function() vim.fn["mkdp#util#install"]() end,
-	}
 
 }
