@@ -36,7 +36,17 @@ vim.opt.smartcase = true
 vim.schedule(function()
 	vim.opt.clipboard = 'unnamedplus'
 end)
--- vim.opt.autochdir = true
+
+vim.opt.autochdir = true
+
+-- if file changes, reload the buffer
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+	callback = function()
+		if vim.fn.mode() ~= 'c' then vim.cmd('silent! checktime') end
+	end
+})
+
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.cursorline = true
