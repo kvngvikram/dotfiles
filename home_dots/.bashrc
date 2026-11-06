@@ -156,15 +156,15 @@ viman () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ; }
 
 micromamba activate default
 
-# export TERM=xterm-256color
+export TERM=xterm-256color
 # export LANG=en_US.UTF-8
 # export LC_CTYPE=en_US.UTF-8
 
 # # make the terminal in vim mode
 # set -o vi
 
-source "$HOME/.config/fzf/key-bindings.bash"  # which is copy of /usr/share/doc/fzf/examples/key-bindings.bash
-# source /usr/share/doc/fzf/examples/key-bindings.bash
-
 # simple dirty method to init ble.sh
 source ~/.local/share/blesh/ble.sh
+
+source "$HOME/.config/fzf/key-bindings.bash"  # which is copy of /usr/share/doc/fzf/examples/key-bindings.bash
+# source /usr/share/doc/fzf/examples/key-bindings.bash
